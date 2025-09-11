@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gdou.hr_system.mapper.LoginDataMapper">
+
+    <resultMap id="BaseResultMap" type="com.gdou.hr_system.entity.LoginData">
+    <id column="Id" property="id" />
+    <result column="UserName" property="UserName" />
+    <result column="PassWord" property="PassWord" />
+    </resultMap>
+    <select id="selectLoginData" resultType="com.gdou.hr_system.entity.LoginData">
+        SELECT * FROM logindata WHERE UserName = #{UserName} AND PassWord = #{PassWord}
+    </select>
+
+</mapper>

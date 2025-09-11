@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 属性必须指向刚才创建的 Mapper 接口的全限定名 -->
+<mapper namespace="com.gdou.hr_system.mapper.EmployeeMapper">
+
+    <!-- 定义数据库字段与Entity属性的映射规则 -->
+    <resultMap id="BaseResultMap" type="com.gdou.hr_system.entity.Employee">
+        <id column="id" property="id" /> <!-- 主键字段映射 -->
+        <result column="name" property="name" /> <!-- 普通字段映射 -->
+        <result column="gender" property="gender" />
+        <result column="birthday" property="birthday" />
+        <result column="phone" property="phone" />
+        <result column="address" property="address" />
+        <result column="dept_id" property="deptId" />
+        <result column="status" property="status" />
+<!--        &lt;!&ndash; 如果你的表字段名和实体类属性名不一致，都需要在这里映射 &ndash;&gt;-->
+    </resultMap>
+
+    <!-- id 属性必须对应 Mapper 接口中的方法名 -->
+    <select id="selectAllEmployees" resultMap="BaseResultMap">
+        SELECT * FROM employees
+    </select>
+
+    <select id="selectEmployeeById" resultMap="BaseResultMap">
+        SELECT * FROM employees WHERE id = #{id}
+    </select>
+
+
+
+    <insert id="addEmployee">
+        INSERT INTO employees (code, name, gender, pwd, birthday, phone, address, remark, dept_id, status)
+        VALUES (#{code}, #{name}, #{gender}, #{pwd}, #{birthday}, #{phone}, #{address}, #{remark}, #{deptId}, #{status})
+    </insert>
+
+    <update id="updateEmployee">
+        UPDATE employees
+        <set>
+            <if test="employee.code != null and employee.code != ''">
+                code = #{employee.code},
+            </if>
+            <if test="employee.name != null and employee.name != ''">
+                name = #{employee.name},
+            </if>
+            <if test="employee.gender != null and employee.gender != ''">
+                gender = #{employee.gender},
+            </if>
+            <if test="employee.pwd != null and employee.pwd != ''">
+                pwd = #{employee.pwd},
+            </if>
+            <if test="employee.birthday != null">
+                birthday = #{employee.birthday},
+            </if>
+            <if test="employee.phone != null and employee.phone != ''">
+                phone = #{employee.phone},
+            </if>
+            <if test="employee.address != null and employee.address != ''">
+                address = #{employee.address},
+            </if>
+            <if test="employee.remark != null and employee.remark != ''">
+                remark = #{employee.remark},
+            </if>
+            <if test="employee.deptId != null">
+                dept_id = #{employee.deptId},
+            </if>
+            <if test="employee.status != null">
+                status = #{employee.status},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <delete id="deleteEmployee">
+        DELETE FROM employees WHERE id = #{id}
+    </delete>
+
+    <select id="searchEmployee" resultMap="BaseResultMap">
+        SELECT * FROM employees
+        <where>
+            <if test="code != null and code != ''">
+                AND code LIKE CONCAT('%', #{code}, '%')
+            </if>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

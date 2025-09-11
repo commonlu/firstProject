@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gdou.hr_system.mapper.SalaryMapper">
+    <resultMap id="BaseResultMap" type="com.gdou.hr_system.entity.Salary">
+    <id property="id" column="id" />
+    <result property="staffId" column="staff_id" />
+    <result property="baseSalary" column="base_salary" />
+    <result property="subside" column="subside" />
+    <result property="bonus" column="bonus" />
+    <result property="totalSalary" column="total_salary" />
+    <result property="lateDeduct" column="late_deduct" />
+    <result property="leaveDeduct" column="leave_early_deduct" />
+    <result property="month" column="month" />
+    <result property="employeeName" column="employee_name" />
+    </resultMap>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+            s.*,
+            e.name as employee_name
+        FROM sal_salary s
+                 LEFT JOIN employees e ON s.staff_id = e.id
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

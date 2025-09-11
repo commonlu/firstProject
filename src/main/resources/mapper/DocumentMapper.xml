@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gdou.hr_system.mapper.DocumentMapper">
+    <resultMap id="BaseResultMap" type="com.gdou.hr_system.entity.Document">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="old_name" property="oldName" />
+        <result column="md5" property="md5" />
+        <result column="size" property="size" />
+        <result column="staff_id" property="staffId" />
+        <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="employee_name" property="employeeName"/>
+    </resultMap>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT d.*,e.name as employee_name
+        FROM docs d
+        LEFT JOIN employees e ON d.id = e.id
+    </select>
+    <select id="searchDocument" resultType="com.gdou.hr_system.entity.Document">
+        SELECT d.*,e.name as employee_name
+        FROM docs d
+        LEFT JOIN employees e ON d.staff_id = e.id
+        <where>
+            <if test="name != null and name != ''">
+                AND d.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="staffId != null and staffId != ''">
+                AND d.staff_id LIKE CONCAT('%', #{staffId}, '%')
+            </if>
+            <if test="employeeName != null and employeeName != ''">
+                AND e.name LIKE CONCAT('%', #{employeeName}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
