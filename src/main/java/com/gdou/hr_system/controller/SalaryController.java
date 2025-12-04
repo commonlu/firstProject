@@ -15,15 +15,25 @@ import java.util.Map;
 public class SalaryController {
     @Autowired
     private SalaryService salaryService;
+    
     @GetMapping("/api/salaries")
     public List<Salary> selectAll()
     {
         return salaryService.selectAll();
     }
+    
     @GetMapping("/api/salaries/export")
     public void exportSalaries(HttpServletResponse response) throws IOException {
         salaryService.exportSalaries(response);
         return;
+    }
+
+    /**
+     * 获取薪资分布统计
+     */
+    @GetMapping("/api/salaries/distribution")
+    public List<Map<String, Object>> getSalaryDistribution() {
+        return salaryService.getSalaryDistribution();
     }
 
 }

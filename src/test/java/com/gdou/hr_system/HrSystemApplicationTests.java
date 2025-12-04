@@ -5,7 +5,7 @@ import com.gdou.hr_system.mapper.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
+// 移除未使用的导入语句 org.springframework.context.annotation.Bean
 
 import java.time.LocalDate;
 import java.util.List;

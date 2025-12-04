@@ -2,9 +2,9 @@ package com.gdou.hr_system.controller;
 
 import com.gdou.hr_system.mapper.EmployeeMapper;
 import com.gdou.hr_system.mapper.LeaveMapper;
-import jakarta.servlet.http.HttpServletRequest;
+// 移除未使用的导入语句
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+// import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

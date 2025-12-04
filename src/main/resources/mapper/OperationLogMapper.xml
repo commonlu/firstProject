@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gdou.hr_system.mapper.OperationLogMapper">
+
+    <resultMap id="OperationLogResultMap" type="com.gdou.hr_system.entity.OperationLog">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="role" property="role" />
+        <result column="operation_type" property="operationType" />
+        <result column="module" property="module" />
+        <result column="target_id" property="targetId" />
+        <result column="description" property="description" />
+        <result column="ip_address" property="ipAddress" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 插入操作日志 -->
+    <insert id="insertOperationLog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO operation_logs (
+            username, role, operation_type, module, target_id, description, ip_address, create_time
+        ) VALUES (
+            #{username}, #{role}, #{operationType}, #{module}, #{targetId}, #{description}, #{ipAddress}, NOW()
+        )
+    </insert>
+
+    <!-- 查询操作日志列表 -->
+    <select id="selectOperationLogs" resultMap="OperationLogResultMap">
+        SELECT
+            id, username, role, operation_type, module, target_id, description, ip_address, create_time
+        FROM
+            operation_logs
+        <where>
+            <if test="username != null and username != ''">
+                AND username LIKE CONCAT('%', #{username}, '%')
+            </if>
+            <if test="module != null and module != ''">
+                AND module = #{module}
+            </if>
+            <if test="operationType != null and operationType != ''">
+                AND operation_type = #{operationType}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND create_time &lt;= #{endTime}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        <if test="offset != null and limit != null">
+            LIMIT #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!-- 统计操作日志总数 -->
+    <select id="countOperationLogs" resultType="int">
+        SELECT COUNT(*)
+        FROM operation_logs
+        <where>
+            <if test="username != null and username != ''">
+                AND username LIKE CONCAT('%', #{username}, '%')
+            </if>
+            <if test="module != null and module != ''">
+                AND module = #{module}
+            </if>
+            <if test="operationType != null and operationType != ''">
+                AND operation_type = #{operationType}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND create_time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

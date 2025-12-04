@@ -1,8 +1,5 @@
 package com.gdou.hr_system.entity;
 
-import lombok.Data;
-
-@Data
 public class LoginData {
     private String userName;
     private String passWord;
